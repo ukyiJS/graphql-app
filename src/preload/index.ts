@@ -1,4 +1,4 @@
-import { contextBridge, IpcRenderer, ipcRenderer, IpcRendererEvent } from 'electron';
+import { contextBridge, ipcRenderer, type IpcRenderer, type IpcRendererEvent } from 'electron';
 
 type Listener = (...args: any[]) => void;
 

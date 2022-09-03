@@ -1,5 +1,5 @@
 import { app, type Rectangle } from 'electron';
-import fs from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 type SettingData = {
@@ -8,7 +8,7 @@ type SettingData = {
 
 const parseDataFile = (filePath: string, defaultSetting = {} as SettingData) => {
   try {
-    return JSON.parse(fs.readFileSync(filePath).toString());
+    return JSON.parse(readFileSync(filePath).toString());
   } catch (error) {
     return defaultSetting;
   }
@@ -24,6 +24,6 @@ export class Setting {
 
   set<K extends keyof SettingData>(key: K, data: SettingData[K]) {
     this.data[key] = data;
-    fs.writeFileSync(this.dataPath, JSON.stringify(this.data));
+    writeFileSync(this.dataPath, JSON.stringify(this.data));
   }
 }

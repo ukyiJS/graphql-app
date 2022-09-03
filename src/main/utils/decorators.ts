@@ -1,4 +1,4 @@
-import { singleton, injectable, inject, registry, ClassProvider, InjectionToken, Provider, RegistrationOptions, injectAll, autoInjectable } from 'tsyringe';
+import { autoInjectable, type ClassProvider, inject, injectable, injectAll, type InjectionToken, type Provider, type RegistrationOptions, registry, singleton } from 'tsyringe';
 
 export const IPC_INVOKE = 'ipc:invoke';
 export const IPC_SEND = 'ipc:send';
