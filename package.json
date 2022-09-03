@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-vite-template",
+  "name": "graphiql-app",
   "version": "1.0.0",
   "main": "dist/main.js",
-  "description": "electron react vite template",
+  "description": "graphiql-app",
   "author": "ukyi",
   "license": "MIT",
   "keywords": [
@@ -21,13 +21,18 @@
     "build": "rimraf dist release && node scripts/build.mjs"
   },
   "dependencies": {
+    "@graphiql/toolkit": "^0.7.0",
     "axios": "^0.27.2",
+    "graphiql": "^2.0.3",
+    "graphql": "^16.6.0",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.184",
     "@types/node": "^18.7.8",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
