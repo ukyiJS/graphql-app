@@ -2,8 +2,8 @@
 
 /** @type {import('electron-builder').Configuration} */
 const config = {
-  productName: 'ukyi-app',
-  appId: 'ukyi.app',
+  productName: 'graphiql-app',
+  appId: 'graphiql.app',
   files: ['dist/**/*'],
   directories: {
     output: 'release/${version}',
