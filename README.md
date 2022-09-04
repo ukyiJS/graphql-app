@@ -20,7 +20,6 @@ GraphQL playground를 쉽게 사용하기 위해 만듦.
 |           [typescript](https://www.typescriptlang.org)           |
 |        [tsyringe](https://github.com/microsoft/tsyringe)         |
 | [reflect-metadata](https://github.com/rbuckton/reflect-metadata) |
-|            [tsx](https://github.com/esbuild-kit/tsx)             |
 |             [axios](https://github.com/axios/axios)              |
 |                   [eslint](https://eslint.org)                   |
 |         [graphiql](https://github.com/graphql/graphiql)          |
