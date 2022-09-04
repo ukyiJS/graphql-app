@@ -17,6 +17,7 @@ export class MainWindow {
     const window = new BrowserWindow({
       ...bounds,
       show: false,
+      title: 'GraphQL',
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: true,
