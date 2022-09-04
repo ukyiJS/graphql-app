@@ -58,10 +58,10 @@ export class MainWindow {
   };
 
   private addWindowMoveEvent = (window: BrowserWindow) => {
-    window.addListener('moved', debounce(() => this.setting.set('bounds', window.getBounds()), 1000));
+    window.addListener('moved', debounce(() => this.setting.set('bounds', window.getBounds()), 300));
   };
 
   private addWindowResizeEvent = (window: BrowserWindow) => {
-    window.addListener('resize', debounce(() => this.setting.set('bounds', window.getBounds()), 1000));
+    window.addListener('resize', debounce(() => this.setting.set('bounds', window.getBounds()), 300));
   };
 }
