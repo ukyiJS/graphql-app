@@ -19,7 +19,7 @@
   "scripts": {
     "dev": "node scripts/watch.mjs",
     "build": "rimraf dist release && node scripts/build.mjs",
-    "deploy": "run-s 'build --publish always'"
+    "build:deploy": "run-s 'build --publish always'"
   },
   "dependencies": {
     "@graphiql/toolkit": "^0.7.0",
