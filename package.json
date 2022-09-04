@@ -1,8 +1,8 @@
 {
-  "name": "graphiql-app",
+  "name": "graphql-app",
   "version": "1.0.0",
   "main": "dist/main.js",
-  "description": "graphiql-app",
+  "description": "graphql-app",
   "author": "ukyi",
   "license": "MIT",
   "keywords": [
