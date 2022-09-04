@@ -18,7 +18,8 @@
   ],
   "scripts": {
     "dev": "node scripts/watch.mjs",
-    "build": "rimraf dist release && node scripts/build.mjs"
+    "build": "rimraf dist release && node scripts/build.mjs",
+    "deploy": "run-s 'build --publish always'"
   },
   "dependencies": {
     "@graphiql/toolkit": "^0.7.0",
@@ -40,6 +41,7 @@
     "@typescript-eslint/parser": "^5.33.1",
     "@vitejs/plugin-react": "^2.0.1",
     "chalk": "^5.0.1",
+    "command-line-args": "^5.2.1",
     "electron": "^20.1.1",
     "electron-builder": "^23.3.3",
     "electron-debug": "^3.2.0",
