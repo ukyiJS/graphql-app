@@ -29,10 +29,19 @@ export const Inject = inject;
 export const InjectAll = injectAll;
 export const Registry = registry;
 
-const isProvider = <T extends RegistrationProvider>(provider: T | ClassConstructor): provider is T => !!(provider as T)?.token;
-const getProviders = (constructors?: ModuleProvider[], token?: InjectionToken): RegistrationProvider[] => constructors?.map(constructor => (isProvider(constructor) ? constructor : ({ token: token || constructor, useValue: constructor }))) ?? [];
+const isConstructor = <T extends ClassConstructor>(constructor: T | unknown): constructor is T => !!constructor?.constructor;
+const isProvider = <T extends RegistrationProvider>(provider: T | ClassConstructor): provider is T => {
+  if (isConstructor(provider)) return false;
+  return !!provider.token;
+};
+const getProviders = (constructors?: ModuleProvider[], option?: { token: InjectionToken, key: 'useValue' | 'useClass' | 'useFactory' | 'useToken' }): RegistrationProvider[] => constructors?.map(constructor => {
+  if (isProvider(constructor)) return constructor;
+  const token = option?.token ?? constructor;
+  const key = option?.key ?? 'useClass';
+  return { token, [key]: constructor } as unknown as RegistrationProvider;
+}) ?? [];
 export const Module = (registration: RegistrationModule) => {
   const providers = getProviders(registration.providers);
-  const controllers = getProviders(registration.controllers, CONTROLLERS);
+  const controllers = getProviders(registration.controllers, { token: CONTROLLERS, key: 'useValue' });
   return registry([...providers, ...controllers]);
 };
