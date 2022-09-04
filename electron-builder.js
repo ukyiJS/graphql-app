@@ -6,6 +6,13 @@ const config = {
   appId: 'graphiql.app',
   files: ['dist/**/*'],
   icon: 'icons/icon.ico',
+  publish: [
+    {
+      provider: 'github',
+      owner: 'ukyiJS',
+      repo: 'graphql-app',
+    },
+  ],
   directories: {
     output: 'release/${version}',
   },
