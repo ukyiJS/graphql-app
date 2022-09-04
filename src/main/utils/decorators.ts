@@ -1,4 +1,4 @@
-import { autoInjectable, type ClassProvider, inject, injectable, injectAll, type InjectionToken, type Provider, type RegistrationOptions, registry, singleton } from 'tsyringe';
+import { autoInjectable, type ClassProvider, inject, injectable, injectAll, type InjectionToken, type Provider, type RegistrationOptions, registry, singleton, container } from 'tsyringe';
 
 export const IPC_INVOKE = 'ipc:invoke';
 export const IPC_SEND = 'ipc:send';
@@ -10,6 +10,7 @@ type ModuleProvider = ClassConstructor | RegistrationProvider;
 type RegistrationModule = {
   controllers?: ModuleProvider[];
   providers?: ModuleProvider[];
+  imports?: InjectionToken[];
 };
 
 export const IpcInvoke = (event: string): MethodDecorator => {
@@ -34,14 +35,14 @@ const isProvider = <T extends RegistrationProvider>(provider: T | ClassConstruct
   if (isConstructor(provider)) return false;
   return !!provider.token;
 };
-const getProviders = (constructors?: ModuleProvider[], option?: { token: InjectionToken, key: 'useValue' | 'useClass' | 'useFactory' | 'useToken' }): RegistrationProvider[] => constructors?.map(constructor => {
+const getProviders = (constructors?: ModuleProvider[]): RegistrationProvider[] => constructors?.map(constructor => {
   if (isProvider(constructor)) return constructor;
-  const token = option?.token ?? constructor;
-  const key = option?.key ?? 'useClass';
-  return { token, [key]: constructor } as unknown as RegistrationProvider;
+  return { token: constructor, useClass: constructor };
 }) ?? [];
 export const Module = (registration: RegistrationModule) => {
+  registration.controllers?.forEach(controller => container.register(CONTROLLERS, { useValue: controller }));
+  if (registration?.imports) registration.imports.forEach(_import => container.resolve(_import));
+
   const providers = getProviders(registration.providers);
-  const controllers = getProviders(registration.controllers, { token: CONTROLLERS, key: 'useValue' });
-  return registry([...providers, ...controllers]);
+  return registry(providers);
 };
