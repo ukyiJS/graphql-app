@@ -1,4 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
+require('dotenv/config');
 
 /** @type {import('electron-builder').Configuration} */
 const config = {
@@ -11,6 +12,7 @@ const config = {
       provider: 'github',
       owner: 'ukyiJS',
       repo: 'graphql-app',
+      token: process.env.GH_TOKEN,
     },
   ],
   directories: {
