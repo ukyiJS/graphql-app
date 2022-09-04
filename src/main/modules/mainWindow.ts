@@ -13,14 +13,10 @@ export class MainWindow {
   }
 
   private init = async () => {
-    await app.whenReady();
-
     const bounds = this.setting.get('bounds') ?? {};
     const window = new BrowserWindow({
       ...bounds,
       show: false,
-      vibrancy: 'under-window',
-      visualEffectState: 'active',
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: true,
@@ -28,10 +24,9 @@ export class MainWindow {
       },
     });
     container.register(BrowserWindow, { useValue: window });
-
-    window.once('ready-to-show', () => window.show());
-
+    window.once('ready-to-show', () => setTimeout(() => window.show(), 100));
     await window.loadURL(this.pageUrl);
+
     this.addWindowHideEvent(window);
     this.addWindowMoveEvent(window);
     this.addWindowResizeEvent(window);
@@ -41,10 +36,10 @@ export class MainWindow {
 
   create = async () => {
     const window = BrowserWindow.getAllWindows().find(w => !w.isDestroyed()) ?? await this.init();
-
     if (window.isMinimized()) window.restore();
-    if (!window.isVisible()) window.show();
     window.focus();
+
+    return window;
   };
 
   private addWindowHideEvent = (window: BrowserWindow) => {
