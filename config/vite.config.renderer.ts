@@ -1,6 +1,7 @@
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 
 const join = (...paths: string[]) => path.join(process.cwd(), ...paths);
 
@@ -22,7 +23,5 @@ export default defineConfig({
     outDir: join('dist'),
     emptyOutDir: false,
   },
-  plugins: [
-    react(),
-  ],
+  plugins: [react(), vanillaExtractPlugin()],
 });
