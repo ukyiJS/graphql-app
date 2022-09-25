@@ -14,26 +14,34 @@ export default function UrlInputModal() {
   const [headerState, setHeaderState] = useState('');
   const [text, setText] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const { data: history = [] } = useQuery(['history'], () => window.app.invoke<string[]>('get-history'));
-  const { mutate: setHistory } = useMutation(['history'], (historyList: string[]) => window.app.invoke('set-history', historyList));
-  const queryClient = useQueryClient();
-
   useIpcOn('url-input-click', () => setIsOpen(true));
 
-  const closeModal = () => setIsOpen(false);
+  const { data: history = [] } = useQuery(['history'], () => window.app.invoke<string[]>('get-history'));
+  const { mutate: mutateHistory } = useMutation(['history'], (historyList: string[]) => window.app.invoke('set-history', historyList));
+
+  const queryClient = useQueryClient();
+  const setHistory = (history: string[]) => {
+    mutateHistory(history);
+    queryClient.setQueryData(['history'], history);
+    setText('');
+  };
+
+  const closeModal = () => {
+    setText('');
+    setIsOpen(false);
+  };
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (/[^a-zA-Z\d\-_.:/]/g.test(value)) return;
     setText(value);
   };
   const onInputKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== 'Enter') return;
-    const historyList = [...(history ?? []), text];
-    setHistory(historyList);
-    queryClient.setQueryData(['history'], historyList);
-    setText('');
+    if (e.key !== 'Enter') return null;
+
+    if (text.includes('clear')) return setHistory([]);
+    return setHistory(history.filter(h => h !== text).concat(text));
   };
   const windowState = () => {
     if (headerState === 'minimize') return style.windowMinimized;
@@ -56,7 +64,7 @@ export default function UrlInputModal() {
           aria-hidden
         />
       </header>
-      <main className={style.contents} onClick={() => inputRef.current?.focus()} aria-hidden>
+      <main className={style.contents} aria-hidden>
         {history?.length ? (
           <>
             <Line />
