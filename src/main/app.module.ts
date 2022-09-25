@@ -8,5 +8,4 @@ import { Module } from './utils/decorators';
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {
-}
+export class AppModule {}
