@@ -1,8 +1,15 @@
-import { Injectable } from './utils/decorators';
+import { Setting } from '@main/modules/setting';
+import { Inject, Injectable } from './utils/decorators';
 
 @Injectable()
 export class AppService {
-  public getDelayTime(): number {
-    return 2;
+  constructor(@Inject(Setting) private setting: Setting) {}
+
+  getHistory() {
+    return this.setting.get('history') ?? [];
+  }
+
+  setHistory(history: string[]) {
+    return this.setting.set('history', history);
   }
 }
