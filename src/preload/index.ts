@@ -1,18 +1,18 @@
-import { contextBridge, ipcRenderer, type IpcRenderer, type IpcRendererEvent } from 'electron';
+import { contextBridge, ipcRenderer, type IpcRendererEvent } from 'electron';
 
-type Listener = (...args: any[]) => void;
+export type Listener<T = any> = (...args: T[]) => void;
 
 export type AppInterface = {
   on(channel: string, listener: Listener): number;
   off(id: number): void;
-  invoke: IpcRenderer['invoke']
+  invoke<T>(channel: string, args?: any): Promise<T>;
 };
 
 type PairMap = {
   [key: number]: {
     channel: string;
     listener: Listener;
-  }
+  };
 };
 
 class App {
