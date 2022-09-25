@@ -46,6 +46,9 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/function-component-definition": "off"
+    "react/function-component-definition": "off",
+    "react/jsx-closing-bracket-location": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "implicit-arrow-linebreak": "off"
   }
 }
