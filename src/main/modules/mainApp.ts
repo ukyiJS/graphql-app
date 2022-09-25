@@ -1,8 +1,8 @@
 import { MainWindow } from '@main/modules/mainWindow';
-import { Inject, Injectable } from '@main/utils/decorators';
+import { Inject, Singleton } from '@main/utils/decorators';
 import { app } from 'electron';
 
-@Injectable()
+@Singleton()
 export class MainApp {
   constructor(@Inject(MainWindow) private mainWindow: MainWindow) {
     this.init().catch(e => {
@@ -24,7 +24,8 @@ export class MainApp {
     });
 
     if (import.meta.env.DEV) {
-      app.whenReady()
+      app
+        .whenReady()
         .then(() => import('electron-debug').then(({ default: debug }) => debug({ showDevTools: false })))
         .then(() => import('../modules/devTools').then(({ DevTools }) => DevTools.install(DevTools.REACT)));
     }

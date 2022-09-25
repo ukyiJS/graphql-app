@@ -1,9 +1,11 @@
+import { Singleton } from '@main/utils/decorators';
 import { app, type Rectangle } from 'electron';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 type SettingData = {
-  bounds: Rectangle
+  bounds: Rectangle;
+  history: string[];
 };
 
 const parseDataFile = (filePath: string, defaultSetting = {} as SettingData) => {
@@ -14,11 +16,12 @@ const parseDataFile = (filePath: string, defaultSetting = {} as SettingData) => 
   }
 };
 
+@Singleton()
 export class Setting {
   private dataPath = join(app.getPath('userData'), 'string.json');
   private data = parseDataFile(this.dataPath) as SettingData;
 
-  get<K extends keyof SettingData>(key: K): SettingData[K] {
+  get<K extends keyof SettingData>(key: K): SettingData[K] | undefined {
     return this.data[key];
   }
 
